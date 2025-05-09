@@ -2,15 +2,10 @@
 
 namespace App\Providers;
 
+use Illuminate\Database\Schema\Builder;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\DB;
 use App\Models\Sanctum\PersonalAccessToken;
 use Laravel\Sanctum\Sanctum;
-
-/**
- * Bootstrap any application services.
- */
-
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,13 +17,11 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
-
-public function boot()
+/**
+ * Bootstrap any application services.
+ */
+public function boot(): void
 {
     Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
-    DB::statement("SET search_path TO public");
 }
 }

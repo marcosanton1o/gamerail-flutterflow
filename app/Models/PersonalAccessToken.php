@@ -9,3 +9,5 @@ class PersonalAccessToken extends SanctumPersonalAccessToken
 {
     // ...
 }
+
+
