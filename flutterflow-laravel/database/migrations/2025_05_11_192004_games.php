@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title')->unique();
             $table->decimal('price', 8, 2);
-            // $table->string('image')->default('storage/images/default.png');
+            $table->string('image');
             $table->integer('total_sales')->default(0);
             $table->string('developer');
             $table->string('category');

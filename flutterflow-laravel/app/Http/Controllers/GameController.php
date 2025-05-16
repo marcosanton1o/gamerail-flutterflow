@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\GameRequest;
 use App\Models\Game;
+use Illuminate\Http\JsonResponse;
 
 class GameController extends Controller
 {
-    public function index()
+
+public function index(): JsonResponse
     {
         $games = Game::all();
-        return response()->json([
-            'total_games' => $games->count(),
-            'games' => $games
-        ]);
+
+        return response()->json($games);
     }
 
     public function store(GameRequest $request)
@@ -26,8 +26,8 @@ class GameController extends Controller
             'developer' => $request->developer,
             'publisher' => $request->publisher,
             'category' => $request->category,
-            'total_sales' => $request->input('total_sales', 0),
-            'image' => $request->input('image', 'images/default.png'),
+            'total_sales' => $request->input('total_sales'),
+            'image' => $request->input('image'),
         ]);
 
         return response()->json([
