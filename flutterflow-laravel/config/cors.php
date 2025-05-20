@@ -17,9 +17,9 @@ return [
 
     'paths' => ['api/*'],
 
-    'allowed_methods' => ['GET', 'POST', 'OPTIONS'],
+    'allowed_methods' => ['GET','POST','PUT','PATCH','DELETE'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => ['https://4f6b-2804-214-8690-ee3f-e087-5193-b4e0-b2e7.ngrok-free.app'],
 
     'allowed_origins_patterns' => [],
 

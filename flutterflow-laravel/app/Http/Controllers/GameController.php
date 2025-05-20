@@ -11,12 +11,15 @@ use Illuminate\Http\JsonResponse;
 class GameController extends Controller
 {
 
-public function index(): JsonResponse
-    {
-        $games = Game::all();
+public function index()
+{
+        $gamestotal = Game::all();
 
-        return response()->json($games);
-    }
+        return response()->json([
+            'gamestotal' => $gamestotal
+        ]);
+
+}
 
     public function store(GameRequest $request)
     {

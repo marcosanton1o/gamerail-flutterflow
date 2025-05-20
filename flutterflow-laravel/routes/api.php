@@ -13,4 +13,8 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
-Route::apiResource('games', GameController::class);
+Route::get('/games', [GameController::class, 'index']);
+Route::post('/games', [GameController::class, 'store']);
+Route::get('/games/{id}', [GameController::class, 'show']);
+Route::put('/games/{id}', [GameController::class, 'update']);
+Route::delete('/games/{id}', [GameController::class, 'destroy']);
