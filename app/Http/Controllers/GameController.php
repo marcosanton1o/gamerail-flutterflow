@@ -1,66 +1,81 @@
 <?php
+
 namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\GameRequest;
 use App\Models\Game;
+use Illuminate\Http\JsonResponse;
 
 class GameController extends Controller
 {
-    public function index()
-    {
-        $games = Game::with(['developer', 'publisher','category'])->get();
-        $totalGames = $games->count();
-        return view('games.index', compact('games', 'totalGames'));
-    }
 
-    public function create()
-    {
-        $companies = Company::all();
-        $categories = GameCategory::all();
-       return view('games.create', compact('companies', 'categories'));
-    }
+public function index()
+{
+        $gamestotal = Game::all();
+
+        return response()->json([
+            'gamestotal' => $gamestotal
+        ]);
+
+}
 
     public function store(GameRequest $request)
-{
-    $game = new Game;
-    $game->title            = $request->title;
-    $game->price            = $request->price;
-    $game->developer     = $request->developer;
-    $game->publisher     = $request->publisher;
-    $game->description      = $request->description;
-    $game->release_date     = $request->release_date;
-    $game->category = $request->category;
-    $game->save();
-
-    session()->flash('message', 'O jogo: ' . $request->title . ' foi adicionado com sucesso!');
-    return redirect('/games');
-}
-    public function show(string $id)
     {
-        //
+        $game = Game::create([
+            'title' => $request->title,
+            'price' => $request->price,
+            'developer' => $request->developer,
+            'publisher' => $request->publisher,
+            'category' => $request->category,
+            'total_sales' => $request->input('total_sales'),
+            'image' => $request->input('image'),
+        ]);
+
+        return response()->json([
+            'message' => 'Jogo criado com sucesso!',
+            'game' => $game
+        ], 201);
     }
-    public function edit(string $id)
+
+    public function show($id)
     {
-        $game = Game::findOrFail($id);
-        $companies = Company::all();
-        $categories = GameCategory::all();
-            return view('games.edit', compact('game', 'companies', 'categories'));
+        $game = Game::find($id);
+
+        if (!$game) {
+            return response()->json(['message' => 'Jogo não encontrado'], 404);
         }
 
-        public function update(GameRequest $request, $id)
-        {
-                $game = Game::findOrFail($id);
-                $game->update($request->all());
+        return response()->json($game);
+    }
 
-            session()->flash('message', 'O jogo: ' . $request->title . ' foi atualizado com sucesso!');
-            return redirect()->route('games.index');
+    public function update(GameRequest $request, $id)
+    {
+        $game = Game::find($id);
+
+        if (!$game) {
+            return response()->json(['message' => 'Jogo não encontrado'], 404);
         }
 
-    public function destroy(string $id)
+        $game->update($request->all());
+
+        return response()->json([
+            'message' => 'Jogo atualizado com sucesso!',
+            'game' => $game
+        ]);
+    }
+
+    public function destroy($id)
     {
-        $games = Game::findOrFail($id);
-        $games->delete();
-        session()->flash('message', 'O jogo: ' . $games->title . ' foi deletado com sucesso!');
-        return redirect('/games');
+        $game = Game::find($id);
+
+        if (!$game) {
+            return response()->json(['message' => 'Jogo não encontrado'], 404);
+        }
+
+        $game->delete();
+
+        return response()->json(['message' => 'Jogo deletado com sucesso!']);
     }
 }

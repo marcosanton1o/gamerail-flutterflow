@@ -93,7 +93,6 @@ return [
             'charset' => env('DB_CHARSET', 'utf8'),
             'prefix' => '',
             'prefix_indexes' => true,
-            'schema' => env('DB_SCHEMA', 'public'),
             'search_path' => 'public',
             'sslmode' => 'prefer',
         ],
@@ -149,7 +148,6 @@ return [
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
             'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
-            'persistent' => env('REDIS_PERSISTENT', false),
         ],
 
         'default' => [

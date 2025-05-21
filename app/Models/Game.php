@@ -13,11 +13,9 @@ class Game extends Model
         'title',
         'price',
         'developer',
-        'publisher',
         'total_sales',
         'image',
-        'description',
-        'release_date',
+        'publisher',
         'category'
     ];
 }
