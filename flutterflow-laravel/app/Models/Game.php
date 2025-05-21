@@ -15,6 +15,7 @@ class Game extends Model
         'developer',
         'total_sales',
         'image',
+        'publisher',
         'category'
     ];
 }

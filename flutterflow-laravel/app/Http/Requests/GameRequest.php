@@ -28,6 +28,7 @@ class GameRequest extends FormRequest
   'developer' => 'nullable|string',
   'total_sales' => 'nullable|integer',
   'category' => 'nullable|string',
+'publisher' => 'nullable|string',
     ];
 }
 }

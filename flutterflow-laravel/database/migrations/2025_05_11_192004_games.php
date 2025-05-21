@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('image');
             $table->integer('total_sales')->default(0);
             $table->string('developer');
+            $table->string('publisher');
             $table->string('category');
 
 
