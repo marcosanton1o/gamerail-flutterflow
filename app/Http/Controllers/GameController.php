@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\GameRequest;
+use App\Http\Requests\GameStoreRequest;
+use App\Http\Requests\GameUpdateRequest;
 use App\Models\Game;
+use App\Models\GameCategory;
 use Illuminate\Http\JsonResponse;
 
 class GameController extends Controller
@@ -22,14 +24,14 @@ class GameController extends Controller
         ]);
     }
 
-    public function store(GameRequest $request)
+    public function store(GameStoreRequest $request)
     {
         $game = Game::create([
             'title' => $request->title,
             'price' => $request->price,
             'developer' => $request->developer,
             'publisher' => $request->publisher,
-            'category' => $request->category,
+            'game_category_id' => $request->game_category_id,
             'total_sales' => $request->total_sales,
             'image' => $request->image,
         ]);
@@ -51,7 +53,7 @@ class GameController extends Controller
         return response()->json($game);
     }
 
-    public function update(GameRequest $request, $id)
+    public function update(GameUpdateRequest $request, $id)
     {
         $game = Game::find($id);
 

@@ -19,7 +19,6 @@ return new class extends Migration
             $table->integer('total_sales')->default(0);
             $table->string('developer');
             $table->string('publisher');
-            $table->string('category');
 
             $table->foreignId('game_category_id')->constrained('game_categories')->onDelete('cascade');
             $table->timestamps();
