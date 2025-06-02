@@ -4,32 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Requests\GameStoreRequest;
-use App\Http\Requests\GameUpdateRequest;
-use App\Models\Game;
+use App\Http\Requests\ProductStoreRequest;
+use App\Http\Requests\ProductUpdateRequest;
+use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 
-class GameController extends Controller
+class ProductController extends Controller
 {
 
     public function index()
     {
-        $gamestotal = Game::count();
-        $games = Game::All();
+        $Productstotal = Product::count();
+        $Products = Product::All();
 
         return response()->json([
-            'gamestotal' => $gamestotal,
-            'games' => $games
+            'Productstotal' => $Productstotal,
+            'Products' => $Products
         ]);
     }
 
-    public function store(GameStoreRequest $request)
+    public function store(ProductStoreRequest $request)
     {
-        $game = Game::create([
-            'title' => $request->title,
-            'price' => $request->price,
-            'developer' => $request->developer,
-            'publisher' => $request->publisher,
+        $Product = Product::create([
+
+            'name' => $request->title,
+            'description' => $request->developer,
+            'price' => $request->publisher,
             'category' => $request->category,
             'total_sales' => $request->total_sales,
             'image' => $request->image,
@@ -37,46 +37,46 @@ class GameController extends Controller
 
         return response()->json([
             'message' => 'Jogo criado com sucesso!',
-            'game' => $game
+            'Product' => $Product
         ], 201);
     }
 
     public function show($id)
     {
-        $game = Game::find($id);
+        $Product = Product::find($id);
 
-        if (!$game) {
+        if (!$Product) {
             return response()->json(['message' => 'Jogo não encontrado'], 404);
         }
 
-        return response()->json($game);
+        return response()->json($Product);
     }
 
-    public function update(GameUpdateRequest $request, $id)
+    public function update(ProductUpdateRequest $request, $id)
     {
-        $game = Game::find($id);
+        $Product = Product::find($id);
 
-        if (!$game) {
+        if (!$Product) {
             return response()->json(['message' => 'Jogo não encontrado'], 404);
         }
 
-        $game->update($request->all());
+        $Product->update($request->all());
 
         return response()->json([
             'message' => 'Jogo atualizado com sucesso!',
-            'game' => $game
+            'Product' => $Product
         ]);
     }
 
     public function destroy($id)
     {
-        $game = Game::find($id);
+        $Product = Product::find($id);
 
-        if (!$game) {
+        if (!$Product) {
             return response()->json(['message' => 'Jogo não encontrado'], 404);
         }
 
-        $game->delete();
+        $Product->delete();
 
         return response()->json(['message' => 'Jogo deletado com sucesso!']);
     }

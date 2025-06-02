@@ -5,18 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GameCategory extends Model
+class Product extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
+        'image',
         'description',
-        'image'
+        'price',
+        'total_sales',
+        'category'
     ];
-
-    public function games()
-    {
-        return $this->hasMany(Game::class);
-    }
 }

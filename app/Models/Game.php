@@ -9,6 +9,10 @@ class Game extends Model
 {
     use HasFactory;
 
+    protected $table=[
+
+    ];
+
     protected $fillable = [
         'title',
         'price',
@@ -16,11 +20,7 @@ class Game extends Model
         'total_sales',
         'image',
         'publisher',
-        'game_category_id'
+        'category'
     ];
 
-    public function category()
-{
-    return $this->belongsTo(GameCategory::class, 'game_category_id');
-}
 }
