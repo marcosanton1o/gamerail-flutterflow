@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('publisher');
             $table->string('category');
 
-
+            $table->foreignId('game_category_id')->constrained('game_categories')->onDelete('cascade');
             $table->timestamps();
         });
     }

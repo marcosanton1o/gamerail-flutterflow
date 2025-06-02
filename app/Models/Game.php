@@ -16,6 +16,11 @@ class Game extends Model
         'total_sales',
         'image',
         'publisher',
-        'category'
+        'game_category_id'
     ];
+
+    public function category()
+{
+    return $this->belongsTo(GameCategory::class, 'game_category_id');
+}
 }
