@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->text('description')->nullable();
             $table->string('image');
-            $table->float('price');
+            $table->decimal('price', 8, 2);
             $table->integer('total_sales')->default(0);
 
             $table->timestamps();
