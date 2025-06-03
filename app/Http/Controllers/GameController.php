@@ -42,15 +42,15 @@ class GameController extends Controller
     }
 
     public function show($id)
-    {
-        $game = Game::find($id);
+{
+    $game = \App\Models\Game::find($id);
 
-        if (!$game) {
-            return response()->json(['message' => 'Jogo não encontrado'], 404);
-        }
-
-        return response()->json($game);
+    if (!$game) {
+        return response()->json(['message' => 'Game not found'], 404);
     }
+
+    return response()->json($game);
+}
 
     public function update(GameUpdateRequest $request, $id)
     {
