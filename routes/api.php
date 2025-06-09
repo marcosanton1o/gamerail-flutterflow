@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
@@ -19,8 +20,8 @@ Route::get('/games/{id}', [GameController::class, 'show']);
 Route::put('/games/{id}', [GameController::class, 'update']);
 Route::delete('/games/{id}', [GameController::class, 'destroy']);
 
-Route::get('/categories', [GameCategoriesController::class, 'index']);
-Route::post('/categories', [GameCategoriesController::class, 'store']);
-Route::get('/categories/{id}', [GameCategoriesController::class, 'show']);
-Route::put('/categories/{id}', [GameCategoriesController::class, 'update']);
-Route::delete('/categories/{id}', [GameCategoriesController::class, 'destroy']);
+Route::get('/products', [ProductController::class, 'index']);
+Route::post('/products', [ProductController::class, 'store']);
+Route::get('/products/{id}', [ProductController::class, 'show']);
+Route::put('/products/{id}', [ProductController::class, 'update']);
+Route::delete('/products/{id}', [ProductController::class, 'destroy']);

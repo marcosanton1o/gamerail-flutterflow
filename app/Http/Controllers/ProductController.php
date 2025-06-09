@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductStoreRequest;
@@ -11,73 +9,62 @@ use Illuminate\Http\JsonResponse;
 
 class ProductController extends Controller
 {
-
     public function index()
     {
         $Productstotal = Product::count();
         $Products = Product::All();
-
         return response()->json([
             'Productstotal' => $Productstotal,
             'Products' => $Products
         ]);
     }
-
     public function store(ProductStoreRequest $request)
-    {
-        $Product = Product::create([
+{
+    $Product = Product::create([
+        'name' => $request->name,
+        'description' => $request->description,
+        'price' => $request->price,
+        'category' => $request->category,
+        'total_sales' => $request->total_sales,
+        'image' => $request->image,
+    ]);
 
-            'name' => $request->title,
-            'description' => $request->developer,
-            'price' => $request->publisher,
-            'category' => $request->category,
-            'total_sales' => $request->total_sales,
-            'image' => $request->image,
-        ]);
-
-        return response()->json([
-            'message' => 'Jogo criado com sucesso!',
-            'Product' => $Product
-        ], 201);
-    }
+    return response()->json([
+        'message' => 'Produto criado com sucesso!',
+        'Product' => $Product
+    ], 201);
+}
 
     public function show($id)
     {
         $Product = Product::find($id);
-
         if (!$Product) {
             return response()->json(['message' => 'Jogo não encontrado'], 404);
         }
-
         return response()->json($Product);
     }
-
     public function update(ProductUpdateRequest $request, $id)
     {
         $Product = Product::find($id);
-
         if (!$Product) {
             return response()->json(['message' => 'Jogo não encontrado'], 404);
         }
-
         $Product->update($request->all());
-
         return response()->json([
             'message' => 'Jogo atualizado com sucesso!',
             'Product' => $Product
         ]);
     }
-
     public function destroy($id)
-    {
-        $Product = Product::find($id);
+{
+    $Product = Product::find($id);
 
-        if (!$Product) {
-            return response()->json(['message' => 'Jogo não encontrado'], 404);
-        }
-
-        $Product->delete();
-
-        return response()->json(['message' => 'Jogo deletado com sucesso!']);
+    if (!$Product) {
+        return response()->json(['message' => 'Produto não encontrado'], 404);
     }
+
+    $Product->delete();
+
+    return response()->noContent(); // Retorna HTTP 204
+}
 }

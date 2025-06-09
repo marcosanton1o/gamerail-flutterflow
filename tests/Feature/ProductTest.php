@@ -1,82 +1,87 @@
 <?php
 
+namespace Tests\Feature;
+
 use App\Models\Product;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class ProductTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_returns_a_successful_response()
+    public function test_returns_all_products()
     {
-        $response = $this->get('/product');
+        Product::factory()->count(2)->create();
 
-        $response->assertStatus(200);
+        $response = $this->getJson('/api/products');
+
+        $response->assertStatus(200)
+                 ->assertJsonCount(2, 'Products');
     }
 
-    public function test_returns_a_successful_response_create()
+    public function test_can_create_product()
     {
-        Product::create([
-            'name' => 'Produto Teste',
-            'image' => 'imagem.jpg',
-            'description' => 'Descrição do produto',
-            'price' => 99.90,
-            'total_sales' => 10,
+        $data = [
+            'name' => 'Novo Produto',
+            'price' => 149.99,
+            'description' => 'Produto incrível',
+            'total_sales' => 10000,
+            'image' => 'produto.jpg',
             'category' => 'Eletrônicos',
-        ]);
+        ];
 
-        $response = $this->get('/product');
+        $response = $this->postJson('/api/products', $data);
 
-        $response->assertStatus(200);
-        $response->assertDontSee(__('no products found'));
+        $response->assertStatus(201)
+                 ->assertJsonFragment(['name' => 'Novo Produto']);
+
+        $this->assertDatabaseHas('products', ['name' => 'Novo Produto']);
     }
 
-    public function test_returns_a_successful_response_update()
+    public function test_can_update_product()
     {
         $product = Product::create([
-            'name' => 'Produto Teste',
-            'image' => 'imagem.jpg',
-            'description' => 'Descrição do produto',
-            'price' => 99.90,
-            'total_sales' => 10,
-            'category' => 'Eletrônicos',
+            'name' => 'Produto Antigo',
+            'price' => 99.99,
+            'description' => 'Descrição antiga',
+            'total_sales' => 500,
+            'image' => 'antigo.jpg',
+            'category' => 'Casa',
         ]);
 
-        $response = $this->put("/product/{$product->id}", [
+        $updatedData = [
             'name' => 'Produto Atualizado',
-            'image' => 'imagem2.jpg',
-            'description' => 'Nova descrição',
-            'price' => 89.90,
-            'total_sales' => 20,
+            'price' => 129.99,
+            'description' => 'Descrição nova',
+            'total_sales' => 1500,
+            'image' => 'novo.jpg',
+            'category' => 'Tecnologia',
+        ];
+
+        $response = $this->putJson("/api/products/{$product->id}", $updatedData);
+
+        $response->assertStatus(200)
+                 ->assertJsonFragment(['name' => 'Produto Atualizado']);
+
+        $this->assertDatabaseHas('products', ['name' => 'Produto Atualizado']);
+    }
+
+    public function test_can_delete_product()
+    {
+        $product = Product::create([
+            'name' => 'Produto Deletável',
+            'price' => 59.99,
+            'description' => 'Para deletar',
+            'total_sales' => 300,
+            'image' => 'imagem.jpg',
             'category' => 'Games',
         ]);
 
-        $response->assertRedirect('/product');
+        $response = $this->deleteJson("/api/products/{$product->id}");
 
-        $this->assertDatabaseHas('products', [
-            'id' => $product->id,
-            'name' => 'Produto Atualizado',
-        ]);
-    }
+        $response->assertStatus(204);
 
-    public function test_returns_a_successful_response_delete()
-    {
-        $product = Product::create([
-            'name' => 'Produto para deletar',
-            'image' => 'imagem.jpg',
-            'description' => 'Descrição do produto',
-            'price' => 49.90,
-            'total_sales' => 5,
-            'category' => 'Livros',
-        ]);
-
-        $response = $this->delete("/product/{$product->id}");
-
-        $response->assertRedirect('/product');
-
-        $this->assertDatabaseMissing('products', [
-            'id' => $product->id,
-        ]);
+        $this->assertDatabaseMissing('products', ['id' => $product->id]);
     }
 }
