@@ -25,10 +25,10 @@ class GameStoreRequest extends FormRequest
             'title' => 'required|string',
   'price' => 'required|numeric',
   'image' => 'nullable|string',
-  'developer' => 'nullable|string',
-  'total_sales' => 'nullable|integer',
-  'category' => 'nullable|string',
-'publisher' => 'nullable|string',
+  'developer' => 'required|string',
+  'total_sales' => 'required|integer',
+  'category' => 'required|string',
+'publisher' => 'required|string',
         ];
     }
 }
