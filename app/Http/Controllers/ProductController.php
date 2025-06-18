@@ -39,22 +39,27 @@ class ProductController extends Controller
     {
         $Product = Product::find($id);
         if (!$Product) {
-            return response()->json(['message' => 'Jogo não encontrado'], 404);
+            return response()->json(['message' => 'Produto não encontrado'], 404);
         }
         return response()->json($Product);
     }
-    public function update(ProductUpdateRequest $request, $id)
+    public function update(Request $request, string $id)
     {
-        $Product = Product::find($id);
-        if (!$Product) {
-            return response()->json(['message' => 'Jogo não encontrado'], 404);
+        $product = Product::find($id);
+
+        if (!$product) {
+            return response()->json(['message' => 'Produto não encontrado'], 404);
         }
-        $Product->update($request->all());
-        return response()->json([
-            'message' => 'Jogo atualizado com sucesso!',
-            'Product' => $Product
-        ]);
+    
+        $updated = $product->update($request->only(['name', 'category', 'price','description','total_sales','image']));
+
+        if ($updated) {
+            return response()->json(['message' => 'Produto atualizado com sucesso', 'product' => $product]);
+        }
+
+        return response()->json(['message' => 'Erro ao atualizar Produto'], 500);
     }
+
     public function destroy($id)
 {
     $Product = Product::find($id);

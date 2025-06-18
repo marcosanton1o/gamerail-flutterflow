@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->unique();
-            $table->decimal('price', 8, 2);
+            $table->string('title');
+            $table->integer('price')->default(0);
             $table->string('image');
             $table->integer('total_sales')->default(0);
             $table->string('developer');

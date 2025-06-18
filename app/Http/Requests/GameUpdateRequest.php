@@ -23,7 +23,7 @@ class GameUpdateRequest extends FormRequest
     {
         return [
             'title' => 'nullable|string',
-  'price' => 'nullable|numeric',
+  'price' => 'nullable|integer',
   'image' => 'nullable|string',
   'developer' => 'nullable|string',
   'total_sales' => 'nullable|integer',

@@ -17,8 +17,8 @@ class ProductUpdateRequest extends FormRequest
             'name' => 'nullable|string|max:255',
             'image' => 'nullable|string|max:255',
             'description' => 'nullable|string',
-            'price' => 'nullable|numeric|min:0',
-            'total_sales' => 'nullable|integer|min:0',
+            'price' => 'nullable|integer',
+            'total_sales' => 'nullable|integer',
             'category' => 'nullable|string|max:100',
         ];
     }

@@ -23,7 +23,7 @@ class GameStoreRequest extends FormRequest
     {
         return [
             'title' => 'required|string',
-  'price' => 'required|numeric',
+  'price' => 'required|integer',
   'image' => 'nullable|string',
   'developer' => 'required|string',
   'total_sales' => 'required|integer',
